@@ -37,6 +37,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^0.14.0+5
   state_notifier: ^0.7.1
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'boardsView.dart';
+import 'boards_view.dart';
 
 class HomeView extends HookWidget {
   const HomeView({Key? key}) : super(key: key);
