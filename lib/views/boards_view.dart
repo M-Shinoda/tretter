@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tretter/models/board.dart';
 
 import '../api.dart';
+import '../models/lists_view.dart';
 
 class BoardsView extends HookWidget {
   const BoardsView({Key? key}) : super(key: key);
@@ -57,8 +58,13 @@ class BoardsView extends HookWidget {
             ]),
         child: GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Container()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Container(
+                            color: Colors.white,
+                            child: const ListsView(),
+                          )));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
