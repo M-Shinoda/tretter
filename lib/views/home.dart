@@ -14,7 +14,7 @@ class HomeView extends HookWidget {
       final timer =
           Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
         radiusDuble.value += 0.01;
-        if (radiusDuble.value >= 3.1) radiusDuble.value = 0;
+        if (radiusDuble.value >= 6.28) radiusDuble.value = 0;
       });
       return timer.cancel;
     }, []);
