@@ -9,12 +9,12 @@ class HomeView extends HookWidget {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final radiusDuble = useState(0.0);
+    final radiansDuble = useState(0.0);
     useEffect(() {
       final timer =
           Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
-        radiusDuble.value += 0.01;
-        if (radiusDuble.value >= 6.28) radiusDuble.value = 0;
+        radiansDuble.value += 0.01;
+        if (radiansDuble.value >= 6.28) radiansDuble.value = 0;
       });
       return timer.cancel;
     }, []);
@@ -48,7 +48,7 @@ class HomeView extends HookWidget {
                         0.0,
                         1.0,
                       ],
-                      transform: GradientRotation(radiusDuble.value)),
+                      transform: GradientRotation(radiansDuble.value)),
                 ))));
   }
 }
