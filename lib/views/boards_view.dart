@@ -12,7 +12,6 @@ class BoardsView extends HookWidget {
     final boards = useState<List<Board>>([]);
     final fetchBoards =
         useMemoized(() async => await dio.get('members/me/boards'), []);
-    // await dio.get('boards/5e54b9bfb916087f5c3f2ff8/lists'), []);
     final fetchBoardsResponse = useFuture(fetchBoards);
 
     useEffect(() {
