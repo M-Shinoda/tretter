@@ -5,12 +5,13 @@ import '../api.dart';
 import '../models/t_card.dart';
 
 class CardsView extends HookWidget {
-  const CardsView({Key? key}) : super(key: key);
+  const CardsView({required this.listId, Key? key}) : super(key: key);
+  final String listId;
   @override
   Widget build(BuildContext context) {
     final listCards = useState<List<TCard>>([]);
-    final fetchListCards = useMemoized(
-        () async => await dio.get('list/5e54bf0b8fdd8e6b3cda51cb/cards'), []);
+    final fetchListCards =
+        useMemoized(() async => await dio.get('list/$listId/cards'), []);
     final fetchListCardsResponse = useFuture(fetchListCards);
 
     useEffect(() {

@@ -62,7 +62,9 @@ class BoardsView extends HookWidget {
                   MaterialPageRoute(
                       builder: (context) => Container(
                             color: Colors.white,
-                            child: const ListsView(),
+                            child: ListsView(
+                              boardId: board.id,
+                            ),
                           )));
             },
             child: Column(

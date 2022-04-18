@@ -6,12 +6,13 @@ import '../board_list.dart';
 import 'list_card_view.dart';
 
 class ListsView extends HookWidget {
-  const ListsView({Key? key}) : super(key: key);
+  const ListsView({required this.boardId, Key? key}) : super(key: key);
+  final String boardId;
   @override
   Widget build(BuildContext context) {
     final boardLists = useState<List<BoardList>>([]);
-    final fetchboardLists = useMemoized(
-        () async => await dio.get('boards/5e54b9bfb916087f5c3f2ff8/lists'), []);
+    final fetchboardLists =
+        useMemoized(() async => await dio.get('boards/$boardId/lists'), []);
     final fetchBoardlistResponse = useFuture(fetchboardLists);
 
     useEffect(() {
@@ -58,8 +59,12 @@ class ListsView extends HookWidget {
             ]),
         child: GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CardsView()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CardsView(
+                            listId: boardList.id,
+                          )));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
