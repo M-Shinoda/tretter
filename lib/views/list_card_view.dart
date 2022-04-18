@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../api.dart';
-import '../board_list.dart';
-import 'list_card_view.dart';
+import '../models/t_card.dart';
 
-class ListsView extends HookWidget {
-  const ListsView({Key? key}) : super(key: key);
+class CardsView extends HookWidget {
+  const CardsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final boardLists = useState<List<BoardList>>([]);
-    final fetchboardLists = useMemoized(
-        () async => await dio.get('boards/5e54b9bfb916087f5c3f2ff8/lists'), []);
-    final fetchBoardlistResponse = useFuture(fetchboardLists);
+    final listCards = useState<List<TCard>>([]);
+    final fetchListCards = useMemoized(
+        () async => await dio.get('list/5e54bf0b8fdd8e6b3cda51cb/cards'), []);
+    final fetchListCardsResponse = useFuture(fetchListCards);
 
     useEffect(() {
-      if (fetchBoardlistResponse.hasData) {
-        final resBoardListData =
-            (fetchBoardlistResponse.data!.data as List<dynamic>).toList();
-        for (var boardList in resBoardListData) {
-          final bl = BoardList.fromJson(boardList);
-          boardLists.value.add(bl);
+      if (fetchListCardsResponse.hasData) {
+        final resListCards =
+            (fetchListCardsResponse.data!.data as List<dynamic>).toList();
+        for (var listCard in resListCards) {
+          listCards.value.add(TCard.fromJson(listCard));
         }
       }
       return;
-    }, [fetchBoardlistResponse.data]);
+    }, [fetchListCardsResponse.data]);
 
     return MaterialApp(
         home: Scaffold(
@@ -34,13 +32,13 @@ class ListsView extends HookWidget {
                 child: SingleChildScrollView(
                     child: Column(
                   children: [
-                    ...boardLists.value
-                        .map((boardList) => listItem(context, boardList))
+                    ...listCards.value
+                        .map((listCard) => listItem(context, listCard))
                   ],
                 )))));
   }
 
-  Widget listItem(BuildContext context, BoardList boardList) {
+  Widget listItem(BuildContext context, TCard boardList) {
     return Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
@@ -59,15 +57,17 @@ class ListsView extends HookWidget {
         child: GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CardsView()));
+                  MaterialPageRoute(builder: (context) => Container()));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(boardList.name),
                 Text(boardList.id),
-                Text(boardList.closed.toString()),
-                Text(boardList.position.toString())
+                Text(boardList.position.toString()),
+                Text(boardList.labels.isNotEmpty
+                    ? boardList.labels.first.id
+                    : "")
               ],
             )));
   }
