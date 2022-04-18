@@ -2,22 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../api.dart';
+import '../board_list.dart';
 import 'list_card_view.dart';
-
-class BoardList {
-  final String id;
-  final String name;
-  final bool closed;
-  final double position;
-
-  BoardList(this.id, this.name, this.closed, this.position);
-
-  BoardList.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        closed = json['closed'],
-        position = json['pos'];
-}
 
 class ListsView extends HookWidget {
   const ListsView({Key? key}) : super(key: key);
