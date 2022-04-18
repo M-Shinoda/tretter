@@ -2,7 +2,7 @@ class BoardList {
   final String id;
   final String name;
   final bool closed;
-  final double position;
+  final num position;
 
   BoardList(this.id, this.name, this.closed, this.position);
 
