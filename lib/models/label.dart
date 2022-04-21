@@ -1,7 +1,7 @@
 class Label {
   final String id;
   final String name;
-  final String color;
+  final String? color;
 
   Label(this.id, this.name, this.color);
 
