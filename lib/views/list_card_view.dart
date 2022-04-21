@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -24,6 +26,22 @@ class CardsView extends HookWidget {
       }
       return;
     }, [fetchListCardsResponse.data]);
+
+    useEffect(() {
+      final timer = Timer.periodic(const Duration(microseconds: 100), (t) {
+        for (var card in listCards.value) {
+          if (card.dueDate == null) return;
+          final diff = DateTime.parse(card.dueDate!).difference(DateTime.now());
+          final index = listCards.value.indexOf(card);
+          List<TCard> temp = listCards.value;
+          temp[index] = card.setDateTime(timerTextFormat(diff));
+          listCards.value = [...temp];
+        }
+      });
+      return () {
+        timer.cancel();
+      };
+    }, const []);
 
     return MaterialApp(
         home: Scaffold(
@@ -68,8 +86,26 @@ class CardsView extends HookWidget {
                 Text(boardList.position.toString()),
                 Text(boardList.labels.isNotEmpty
                     ? boardList.labels.first.id
-                    : "")
+                    : ""),
+                if (boardList.dueString != null) Text(boardList.dueString!)
               ],
             )));
+  }
+
+  String timerTextFormat(Duration due) {
+    String hour;
+    String minute;
+    if (due.inHours <= 0 && due.inMinutes <= 0) return 'DEAD LINE';
+    if (due.inHours < 10) {
+      hour = '0' + due.inHours.toString();
+    } else {
+      hour = due.toString();
+    }
+    if ((due.inMinutes - due.inHours * 60) < 10) {
+      minute = '0' + ((due.inMinutes - due.inHours * 60)).toString();
+    } else {
+      minute = (due.inMinutes - due.inHours * 60).toString();
+    }
+    return '$hour:$minute';
   }
 }

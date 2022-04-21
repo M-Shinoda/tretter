@@ -7,9 +7,11 @@ class TCard {
   final List<Label> labels;
   final String? dueDate;
   final bool dueComplete;
+  final String? dueString;
 
-  TCard(this.id, this.name, this.position, this.labels, this.dueDate,
-      this.dueComplete);
+  const TCard(this.id, this.name, this.position, this.labels, this.dueDate,
+      this.dueComplete,
+      {this.dueString});
 
   TCard.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -19,5 +21,11 @@ class TCard {
         dueComplete = json['dueComplete'],
         labels = (json['labels'] as List<dynamic>)
             .map((e) => Label.fromJson(e as Map<String, dynamic>))
-            .toList();
+            .toList(),
+        dueString = null;
+
+  TCard setDateTime(String dueString) {
+    return TCard(id, name, position, labels, dueDate, dueComplete,
+        dueString: dueString);
+  }
 }
