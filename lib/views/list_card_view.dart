@@ -57,7 +57,7 @@ class CardsView extends HookWidget {
                 )))));
   }
 
-  Widget listItem(BuildContext context, TCard boardList) {
+  Widget listItem(BuildContext context, TCard card) {
     return Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
@@ -81,13 +81,9 @@ class CardsView extends HookWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(boardList.name),
-                Text(boardList.id),
-                Text(boardList.position.toString()),
-                Text(boardList.labels.isNotEmpty
-                    ? boardList.labels.first.id
-                    : ""),
-                if (boardList.dueString != null) Text(boardList.dueString!)
+                Text(card.name),
+                Text(card.id),
+                if (card.dueString != null) Text(card.dueString!)
               ],
             )));
   }
