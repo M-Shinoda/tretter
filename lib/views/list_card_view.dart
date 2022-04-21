@@ -63,7 +63,19 @@ class CardsView extends HookWidget {
         margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-            color: Colors.white,
+            gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomRight,
+                colors: [
+                  const Color(0xff66e466).withOpacity(0.6),
+                  // const Color(0xffef3345).withOpacity(0.8),
+                  // const Color(0xffefef22).withOpacity(0.8),
+                  const Color(0xff22ef22).withOpacity(0.8),
+                ],
+                stops: const [
+                  0.01,
+                  0.5,
+                ]),
             border: Border.all(color: const Color(0x16000000)),
             borderRadius: BorderRadius.circular(10),
             boxShadow: const [
