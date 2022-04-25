@@ -67,7 +67,8 @@ class CardsView extends HookWidget {
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomRight,
                 colors: [
-                  const Color(0xff66e466).withOpacity(0.6),
+                  const Color(0xffffffff),
+                  // const Color(0xff66e466).withOpacity(0.6),
                   // const Color(0xffef3345).withOpacity(0.8),
                   // const Color(0xffefef22).withOpacity(0.8),
                   const Color(0xff22ef22).withOpacity(0.8),
