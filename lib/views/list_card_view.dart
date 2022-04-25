@@ -34,7 +34,9 @@ class CardsView extends HookWidget {
           final diff = DateTime.parse(card.dueDate!).difference(DateTime.now());
           final index = listCards.value.indexOf(card);
           List<TCard> temp = listCards.value;
-          temp[index] = card.setDateTime(timerTextFormat(diff));
+          temp[index] = card.copyWith(
+              dueString: timerTextFormat(diff),
+              remindColor: remindTimerToColor(diff));
           listCards.value = [...temp];
         }
       });
@@ -68,10 +70,7 @@ class CardsView extends HookWidget {
                 end: FractionalOffset.bottomRight,
                 colors: [
                   const Color(0xffffffff),
-                  // const Color(0xff66e466).withOpacity(0.6),
-                  // const Color(0xffef3345).withOpacity(0.8),
-                  // const Color(0xffefef22).withOpacity(0.8),
-                  const Color(0xff22ef22).withOpacity(0.8),
+                  card.remindColor ?? const Color(0xffffffff)
                 ],
                 stops: const [
                   0.01,
@@ -116,5 +115,18 @@ class CardsView extends HookWidget {
       minute = (due.inMinutes - due.inHours * 60).toString();
     }
     return '$hour:$minute';
+  }
+
+  Color remindTimerToColor(Duration diff) {
+    if (diff.inSeconds < 3600) {
+      return const Color(0xffef3345).withOpacity(0.8);
+    } else if (diff.inSeconds < 21600) {
+      return const Color(0xffefef22).withOpacity(0.8);
+    } else if (diff.inSeconds < 86400) {
+      // return Color(0xff22ef22).withOpacity(0.8);
+      return const Color(0xff66e466).withOpacity(0.6);
+    } else {
+      return const Color(0xff66e4ee).withOpacity(0.6);
+    }
   }
 }
