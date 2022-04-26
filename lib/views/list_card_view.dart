@@ -49,14 +49,16 @@ class CardsView extends HookWidget {
         home: Scaffold(
             backgroundColor: Colors.cyan[50],
             body: Container(
-                padding: const EdgeInsets.only(top: 100),
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
+                padding: const EdgeInsets.only(top: 70),
+                child: Column(children: [
+                  infoHeader(context),
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: Column(children: [
                     ...listCards.value
                         .map((listCard) => listItem(context, listCard))
-                  ],
-                )))));
+                  ])))
+                ]))));
   }
 
   Widget listItem(BuildContext context, TCard card) {
@@ -69,7 +71,7 @@ class CardsView extends HookWidget {
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomRight,
                 colors: [
-                  const Color(0xffffffff),
+                  const Color(0xeffefefe),
                   card.remindColor ?? const Color(0xffffffff)
                 ],
                 stops: const [
@@ -128,5 +130,27 @@ class CardsView extends HookWidget {
     } else {
       return const Color(0xff66e4ee).withOpacity(0.6);
     }
+  }
+
+  Widget infoHeader(BuildContext context) {
+    return Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 150,
+        margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: const Color(0x16000000)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Container()));
+            },
+            child: const Text(
+              "TEST TEXT",
+            )));
   }
 }
