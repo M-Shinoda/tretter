@@ -149,8 +149,6 @@ class CardsView extends HookWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Container()));
             },
-            child: const Text(
-              "TEST TEXT",
-            )));
+            child: const Text("TEST TEXT")));
   }
 }
