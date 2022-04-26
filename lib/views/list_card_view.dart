@@ -34,11 +34,9 @@ class CardsView extends HookWidget {
           if (card.dueDate == null) continue;
           final diff = DateTime.parse(card.dueDate!).difference(DateTime.now());
           final index = listCards.value.indexOf(card);
-          List<TCard> temp = listCards.value;
           temp[index] = card.copyWith(
               dueString: timerTextFormat(diff),
               remindColor: remindTimerToColor(diff));
-          listCards.value = [...temp];
         }
         temp.sort(
             (a, b) => a.dueString.toString().compareTo(b.dueString.toString()));
