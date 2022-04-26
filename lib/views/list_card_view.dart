@@ -29,8 +29,9 @@ class CardsView extends HookWidget {
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(microseconds: 100), (t) {
+        List<TCard> temp = listCards.value;
         for (var card in listCards.value) {
-          if (card.dueDate == null) return;
+          if (card.dueDate == null) continue;
           final diff = DateTime.parse(card.dueDate!).difference(DateTime.now());
           final index = listCards.value.indexOf(card);
           List<TCard> temp = listCards.value;
@@ -39,6 +40,9 @@ class CardsView extends HookWidget {
               remindColor: remindTimerToColor(diff));
           listCards.value = [...temp];
         }
+        temp.sort(
+            (a, b) => a.dueString.toString().compareTo(b.dueString.toString()));
+        listCards.value = [...(temp)];
       });
       return () {
         timer.cancel();
