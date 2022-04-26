@@ -109,7 +109,7 @@ class CardsView extends HookWidget {
     if (due.inHours < 10) {
       hour = '0' + due.inHours.toString();
     } else {
-      hour = due.toString();
+      hour = due.inHours.toString();
     }
     if ((due.inMinutes - due.inHours * 60) < 10) {
       minute = '0' + ((due.inMinutes - due.inHours * 60)).toString();
