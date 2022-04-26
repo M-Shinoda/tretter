@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -60,7 +61,9 @@ class CardsView extends HookWidget {
                     ...listCards.value
                         .map((listCard) => listItem(context, listCard))
                   ])))
-                ]))));
+                ])),
+            floatingActionButton: FloatingActionButton(
+                onPressed: () {}, child: const Icon(CupertinoIcons.add))));
   }
 
   Widget listItem(BuildContext context, TCard card) {
