@@ -1,20 +1,22 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:tretter/board_list.dart';
 
 import '../api.dart';
 import '../models/t_card.dart';
 
 class CardsView extends HookWidget {
-  const CardsView({required this.listId, Key? key}) : super(key: key);
-  final String listId;
+  const CardsView({required this.list, Key? key}) : super(key: key);
+  final BoardList list;
   @override
   Widget build(BuildContext context) {
     final listCards = useState<List<TCard>>([]);
     final fetchListCards =
-        useMemoized(() async => await dio.get('list/$listId/cards'), []);
+        useMemoized(() async => await dio.get('list/${list.id}/cards'), []);
     final fetchListCardsResponse = useFuture(fetchListCards);
 
     useEffect(() {
@@ -54,7 +56,7 @@ class CardsView extends HookWidget {
             body: Container(
                 padding: const EdgeInsets.only(top: 70),
                 child: Column(children: [
-                  infoHeader(context),
+                  infoHeader(context, list),
                   Expanded(
                       child: SingleChildScrollView(
                           child: Column(children: [
@@ -137,7 +139,7 @@ class CardsView extends HookWidget {
     }
   }
 
-  Widget infoHeader(BuildContext context) {
+  Widget infoHeader(BuildContext context, BoardList list) {
     return Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -145,15 +147,22 @@ class CardsView extends HookWidget {
         margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: const Color(0x16000000)),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Container()));
-            },
-            child: const Text("TEST TEXT")));
+            border: Border.all(color: const Color(0x16000000)),
+            borderRadius: BorderRadius.circular(10),
+            image: const DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/d03e6f84a6bbe127d7cb84e03b64cb89/photo-1582520632092-410a5f4baa95'))),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    color: const Color.fromARGB(40, 255, 255, 255),
+                    child: const Text("TEST TEXT\n1000",
+                        style: TextStyle(color: Colors.black),
+                        textAlign: TextAlign.center)))));
   }
 }

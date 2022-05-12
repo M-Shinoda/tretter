@@ -63,7 +63,7 @@ class ListsView extends HookWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CardsView(
-                            listId: boardList.id,
+                            list: boardList,
                           )));
             },
             child: Column(
